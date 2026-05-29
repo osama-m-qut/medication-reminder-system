@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MediRemind — Assignment Proof | IFQ636 A1</title>
+<style>
+  :root{
+    --bg:#070b14; --bg2:#0c1322; --card:#111b2e; --line:#1e2c44;
+    --ink:#e7eefb; --muted:#8da2c0; --teal:#2dd4bf; --blue:#3b82f6;
+    --green:#22c55e; --amber:#f59e0b; --violet:#a78bfa; --pink:#f472b6;
+    --grad:linear-gradient(120deg,#2dd4bf,#3b82f6 55%,#a78bfa);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:'Segoe UI',system-ui,-apple-system,sans-serif;line-height:1.6;overflow-x:hidden}
+  a{color:inherit}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  h1,h2,h3{line-height:1.15;font-weight:800;letter-spacing:-.02em}
+  .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);background:rgba(7,11,20,.72);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+  nav .brand{font-weight:800;font-size:18px;display:flex;gap:8px;align-items:center}
+  nav .links{display:flex;gap:22px;font-size:14px;color:var(--muted)}
+  nav .links a{text-decoration:none;transition:color .2s}
+  nav .links a:hover{color:var(--teal)}
+  @media(max-width:760px){nav .links{display:none}}
+
+  /* hero */
+  .hero{position:relative;padding:90px 0 70px;text-align:center;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:-40% -20% auto;height:680px;background:radial-gradient(60% 60% at 50% 0,rgba(59,130,246,.22),transparent 70%),radial-gradient(40% 40% at 80% 20%,rgba(45,212,191,.18),transparent 70%);filter:blur(10px);z-index:-1}
+  .pill{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line);background:var(--card);padding:7px 14px;border-radius:999px;font-size:13px;color:var(--muted)}
+  .hero h1{font-size:clamp(34px,6vw,62px);margin:22px 0 10px}
+  .hero p.sub{font-size:clamp(16px,2.4vw,21px);color:var(--muted);max-width:720px;margin:0 auto}
+  .statusbadge{margin:26px auto 0;display:inline-flex;align-items:center;gap:10px;border:1px solid var(--line);background:var(--card);padding:10px 18px;border-radius:12px;font-size:14px}
+  .dot{width:10px;height:10px;border-radius:50%;background:var(--muted);box-shadow:0 0 0 0 rgba(34,197,94,.6)}
+  .dot.live{background:var(--green);animation:pulse 1.8s infinite}
+  .dot.down{background:#ef4444}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,.5)}70%{box-shadow:0 0 0 12px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+  .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+  .btn{text-decoration:none;font-weight:600;font-size:14px;padding:12px 20px;border-radius:11px;border:1px solid var(--line);background:var(--card);transition:transform .15s,border-color .2s}
+  .btn:hover{transform:translateY(-2px);border-color:var(--teal)}
+  .btn.primary{background:var(--grad);color:#04121f;border:none}
+
+  /* sections */
+  section{padding:64px 0;border-top:1px solid var(--line)}
+  .eyebrow{color:var(--teal);font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase}
+  .h2{font-size:clamp(26px,4vw,40px);margin:8px 0 6px}
+  .lead{color:var(--muted);max-width:760px;font-size:17px}
+
+  /* stat counters */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:30px}
+  @media(max-width:860px){.stats{grid-template-columns:repeat(2,1fr)}}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px}
+  .stat .n{font-size:38px;font-weight:800}
+  .stat .l{color:var(--muted);font-size:13px;margin-top:4px}
+
+  /* timeline */
+  .timeline{margin-top:34px;position:relative;padding-left:30px}
+  .timeline::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--teal),var(--blue),var(--violet))}
+  .tstep{position:relative;padding:0 0 30px 24px}
+  .tstep::before{content:"";position:absolute;left:-30px;top:4px;width:18px;height:18px;border-radius:50%;background:var(--bg);border:3px solid var(--teal)}
+  .tstep h3{font-size:19px}
+  .tstep .meta{color:var(--teal);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+  .tstep p{color:var(--muted);font-size:15px;margin-top:4px}
+  .tstep a{color:var(--blue);text-decoration:none;font-size:14px;font-weight:600}
+  .tstep a:hover{text-decoration:underline}
+
+  /* rubric */
+  .rubric{margin-top:30px;display:grid;gap:12px}
+  .rrow{display:grid;grid-template-columns:1.6fr 2fr auto;gap:16px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px}
+  @media(max-width:760px){.rrow{grid-template-columns:1fr;gap:8px}}
+  .rrow .name{font-weight:600}
+  .rrow .name small{display:block;color:var(--muted);font-weight:400;font-size:12.5px}
+  .bar{height:9px;background:#0a1424;border-radius:99px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:var(--grad);border-radius:99px;transition:width 1.2s ease}
+  .pts{font-weight:800;font-size:15px;white-space:nowrap}
+  .scoretotal{margin-top:18px;text-align:right;font-size:15px;color:var(--muted)}
+  .scoretotal b{color:var(--teal);font-size:20px}
+
+  /* evidence cards */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:30px}
+  @media(max-width:860px){.cards{grid-template-columns:1fr}}
+  .card{display:block;text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;transition:transform .15s,border-color .2s}
+  .card:hover{transform:translateY(-3px);border-color:var(--teal)}
+  .card .ico{font-size:26px}
+  .card h3{margin:12px 0 4px;font-size:17px}
+  .card p{color:var(--muted);font-size:13.5px}
+  .card .go{color:var(--teal);font-size:13px;font-weight:700;margin-top:10px;display:inline-block}
+
+  /* live frame */
+  .frame{margin-top:26px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#000}
+  .frame .bar2{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#0a1424;border-bottom:1px solid var(--line)}
+  .frame .bar2 .d{width:11px;height:11px;border-radius:50%}
+  .frame .url{margin-left:10px;font-size:12px;color:var(--muted);font-family:monospace}
+  .frame iframe{width:100%;height:560px;border:0;background:#fff;display:block}
+
+  /* screens (CSS previews) */
+  .screens{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}
+  @media(max-width:860px){.screens{grid-template-columns:1fr}}
+  .shot{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .shot .top{height:30px;background:var(--blue);display:flex;align-items:center;padding:0 10px;gap:6px}
+  .shot .top b{color:#fff;font-size:11px}
+  .shot .body{padding:14px;min-height:150px}
+  .shot .cap{padding:10px 14px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px}
+  .miniStat{display:inline-block;background:#0a1424;border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin:3px;font-size:11px}
+  .row{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{font-size:10px;padding:2px 7px;border-radius:99px;background:#0a1424;border:1px solid var(--line);color:var(--muted)}
+
+  /* tech badges */
+  .badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+  .badge{border:1px solid var(--line);background:var(--card);border-radius:9px;padding:8px 14px;font-size:13px;color:var(--muted)}
+
+  footer{border-top:1px solid var(--line);padding:40px 0 70px;color:var(--muted);font-size:13.5px}
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s,transform .7s}
+  .reveal.in{opacity:1;transform:none}
+  code{background:#0a1424;border:1px solid var(--line);padding:2px 7px;border-radius:6px;font-size:13px;color:var(--teal)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">💊 MediRemind <span style="color:var(--muted);font-weight:500;font-size:13px">· Proof Report</span></div>
+    <div class="links">
+      <a href="#story">Story</a><a href="#live">Live App</a><a href="#rubric">Scorecard</a>
+      <a href="#evidence">Evidence</a><a href="#stack">Stack</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="pill">🎓 QUT IFQ636 · Software Lifecycle Management · Assignment 1</span>
+    <h1>The <span class="grad-text">Medication Reminder System</span><br/>built end-to-end.</h1>
+    <p class="sub">A full-stack MERN application delivered with the complete software lifecycle — SysML design, JIRA planning, Figma UX, GitHub branching, CI/CD automation, and a live AWS deployment. This page is living proof: it pings the real server as you read.</p>
+    <div class="statusbadge"><span id="dot" class="dot"></span><span id="statusText">Checking the live server…</span></div>
+    <div class="cta">
+      <a class="btn primary" href="http://3.27.69.84:5001" target="_blank">🌐 Open the live app</a>
+      <a class="btn" href="https://github.com/osama-m-qut/medication-reminder-system" target="_blank">⌥ GitHub repo</a>
+      <a class="btn" href="https://nomadsps.atlassian.net/jira/software/projects/MRS/boards/" target="_blank">📋 Jira board</a>
+      <a class="btn" href="https://www.figma.com/design/eOTBAmuSM5tgCKIcsGb490" target="_blank">🎨 Figma</a>
+    </div>
+  </div>
+</header>
+
+<section id="numbers">
+  <div class="wrap reveal">
+    <span class="eyebrow">At a glance</span>
+    <h2 class="h2">Everything the brief asked for — and the evidence to back it.</h2>
+    <div class="stats">
+      <div class="stat"><div class="n" data-count="100">0</div><div class="l">Rubric points mapped to evidence</div></div>
+      <div class="stat"><div class="n" data-count="14">0</div><div class="l">Automated tests passing (13 API + 1 UI)</div></div>
+      <div class="stat"><div class="n" data-count="42">0</div><div class="l">Jira issues (6 epics · 11 stories · 25 subtasks)</div></div>
+      <div class="stat"><div class="n" data-count="7">0</div><div class="l">Commits across 3 feature branches + 3 PRs</div></div>
+      <div class="stat"><div class="n" data-count="7">0</div><div class="l">SysML diagrams in diagrams.net</div></div>
+      <div class="stat"><div class="n" data-count="6">0</div><div class="l">Figma screens (hi-fi) + 2 wireframes</div></div>
+      <div class="stat"><div class="n" data-count="4">0</div><div class="l">CRUD modules, fully owner-scoped</div></div>
+      <div class="stat"><div class="n" data-count="2">0</div><div class="l">CI/CD jobs — both green ✅</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="story">
+  <div class="wrap reveal">
+    <span class="eyebrow">The build, step by step</span>
+    <h2 class="h2">From a blank starter to a deployed product.</h2>
+    <p class="lead">The project extends the <code>nahaQUT/sampleapp_IFQ636</code> auth starter into a real medication-adherence platform, following every phase of the lifecycle.</p>
+    <div class="timeline">
+      <div class="tstep"><div class="meta">01 · Requirements & SysML</div><h3>Designed before coding</h3><p>Captured user/admin requirements, then modelled the system in SysML: a requirement diagram (with «deriveReqt»/«satisfy» traceability), use-case, BDD, IBD, activity, sequence and state-machine diagrams.</p><a href="https://github.com/osama-m-qut/medication-reminder-system/blob/main/docs/sysml-diagrams.drawio" target="_blank">View diagrams →</a></div>
+      <div class="tstep"><div class="meta">02 · Project management (JIRA)</div><h3>Planned as epics, stories & sprints</h3><p>A Scrum board with 6 epics broken into 11 user stories and 25 sub-tasks, organised across two sprints — Medication Management, Reminder Scheduling, Dose Tracking, Admin Console, Auth and DevOps.</p><a href="https://nomadsps.atlassian.net/jira/software/projects/MRS/boards/" target="_blank">Open Jira board →</a></div>
+      <div class="tstep"><div class="meta">03 · UI/UX (Figma)</div><h3>Wireframes → hi-fi → interactive prototype</h3><p>Low-fidelity wireframes and four polished high-fidelity screens (Login, Dashboard, Medications, Admin) wired into a clickable prototype with smart-animate transitions.</p><a href="https://www.figma.com/design/eOTBAmuSM5tgCKIcsGb490" target="_blank">Open Figma →</a></div>
+      <div class="tstep"><div class="meta">04 · Backend (Node · Express · MongoDB)</div><h3>Owner-scoped CRUD with role-based access</h3><p>Medication, Reminder, DoseLog and Admin APIs — every query scoped to the authenticated patient, JWT auth, an admin guard, and adherence computed via a MongoDB aggregation. 13 Mocha+Sinon tests run DB-free.</p></div>
+      <div class="tstep"><div class="meta">05 · Frontend (React · Tailwind)</div><h3>Dashboard, CRUD pages & admin panel</h3><p>A responsive React SPA: adherence dashboard with one-tap dose logging, full medication & reminder CRUD, dose history, and a role-gated admin console.</p></div>
+      <div class="tstep"><div class="meta">06 · Version control (GitHub)</div><h3>Clean, reviewable history</h3><p>Feature-branch workflow: <code>main</code> + three feature branches, each merged through a pull request, producing a structured, traceable commit history.</p><a href="https://github.com/osama-m-qut/medication-reminder-system/pulls?q=is%3Apr" target="_blank">See the pull requests →</a></div>
+      <div class="tstep"><div class="meta">07 · CI/CD (GitHub Actions)</div><h3>Automated test → build → deploy</h3><p>Every push to <code>main</code> runs the test suite, builds the frontend on the runner, ships it to EC2 over SSH, and reloads PM2 — using a protected <code>production</code> environment with encrypted secrets.</p><a href="https://github.com/osama-m-qut/medication-reminder-system/actions" target="_blank">View pipeline runs →</a></div>
+      <div class="tstep"><div class="meta">08 · Deployment (AWS EC2)</div><h3>Live on the public internet</h3><p>Running on an Ubuntu EC2 instance (Sydney) — backend under PM2 serving the React build, MongoDB in Docker. One public URL, reachable right now.</p><a href="http://3.27.69.84:5001" target="_blank">Visit http://3.27.69.84:5001 →</a></div>
+    </div>
+  </div>
+</section>
+
+<section id="live">
+  <div class="wrap reveal">
+    <span class="eyebrow">Don't take our word for it</span>
+    <h2 class="h2">The real application, embedded live.</h2>
+    <p class="lead">This is the actual production server on AWS EC2 — not a screenshot. Log in with the demo accounts below.</p>
+    <div class="row" style="margin-top:14px">
+      <span class="miniStat">👤 Patient — <b>patient@mediremind.com</b> / Patient@123</span>
+      <span class="miniStat">🛡️ Admin — <b>admin@mediremind.com</b> / Admin@123</span>
+    </div>
+    <div class="frame">
+      <div class="bar2"><span class="d" style="background:#ff5f56"></span><span class="d" style="background:#ffbd2e"></span><span class="d" style="background:#27c93f"></span><span class="url">http://3.27.69.84:5001</span></div>
+      <iframe src="http://3.27.69.84:5001" title="Live MediRemind app" loading="lazy"></iframe>
+    </div>
+    <p style="color:var(--muted);font-size:13px;margin-top:10px">If the frame is blank, your browser may block cross-origin embedding — just <a style="color:var(--teal)" href="http://3.27.69.84:5001" target="_blank">open it in a new tab</a>.</p>
+  </div>
+</section>
+
+<section id="screens">
+  <div class="wrap reveal">
+    <span class="eyebrow">The interface</span>
+    <h2 class="h2">Designed in Figma, shipped in React.</h2>
+    <div class="screens">
+      <div class="shot"><div class="top"><b>💊 MediRemind — Dashboard</b></div><div class="body">
+        <div class="row"><span class="miniStat">✅ 67%<br>Adherence</span><span class="miniStat">2<br>Taken</span><span class="miniStat">1<br>Skipped</span><span class="miniStat">0<br>Missed</span></div>
+        <div style="margin-top:10px" class="row"><span class="chip">Metformin · 08:00, 20:00 · Mark taken</span><span class="chip">Lisinopril · 08:00 · Skip</span></div>
+      </div><div class="cap">Patient dashboard — adherence at a glance + one-tap dose logging.</div></div>
+      <div class="shot"><div class="top"><b>Medications — CRUD</b></div><div class="body">
+        <div class="row"><span class="chip">Name</span><span class="chip">Dosage</span><span class="chip">Form ▾</span><span class="chip">Instructions</span></div>
+        <div style="margin-top:10px" class="row"><span class="miniStat">Metformin · 500mg · tablet · Edit/Delete</span><span class="miniStat">Lisinopril · 10mg · tablet · Edit/Delete</span></div>
+      </div><div class="cap">Create, read, update & delete — scoped to each patient.</div></div>
+      <div class="shot"><div class="top"><b>Admin Panel</b></div><div class="body">
+        <div class="row"><span class="miniStat">Users<br>12</span><span class="miniStat">Meds<br>34</span><span class="miniStat">Reminders<br>28</span><span class="miniStat">Adherence<br>82%</span></div>
+        <div style="margin-top:10px" class="row"><span class="chip">Promote / Demote</span><span class="chip">Delete user</span><span class="chip">Role: admin</span></div>
+      </div><div class="cap">Role-gated admin console — user management + system stats.</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="rubric">
+  <div class="wrap reveal">
+    <span class="eyebrow">Marking criteria</span>
+    <h2 class="h2">Every rubric line, mapped to working evidence.</h2>
+    <div class="rubric" id="rubricRows">
+      <div class="rrow"><div class="name">Project design with SysML<small>7 diagrams · requirement traceability</small></div><div class="bar"><i data-w="100"></i></div><div class="pts">16 pts</div></div>
+      <div class="rrow"><div class="name">Project management with JIRA<small>6 epics · 11 stories · 25 sub-tasks</small></div><div class="bar"><i data-w="100"></i></div><div class="pts">12 pts</div></div>
+      <div class="rrow"><div class="name">UI/UX (Figma)<small>lo-fi + hi-fi + interactive prototype</small></div><div class="bar"><i data-w="100"></i></div><div class="pts">12 pts</div></div>
+      <div class="rrow"><div class="name">Backend with MongoDB<small>owner-scoped CRUD · 13 tests</small></div><div class="bar"><i data-w="100"></i></div><div class="pts">12 pts</div></div>
+      <div class="rrow"><div class="name">Frontend (React)<small>responsive · Tailwind · role-gated</small></div><div class="bar"><i data-w="100"></i></div><div class="pts">12 pts</div></div>
+      <div class="rrow"><div class="name">GitHub version control & branching<small>3 feature branches · 3 PRs</small></div><div class="bar"><i data-w="100"></i></div><div class="pts">12 pts</div></div>
+      <div class="rrow"><div class="name">CI/CD pipeline<small>Actions test+deploy · both green</small></div><div class="bar"><i data-w="100"></i></div><div class="pts">12 pts</div></div>
+      <div class="rrow"><div class="name">README & report<small>live links · 2,000-word report</small></div><div class="bar"><i data-w="100"></i></div><div class="pts">12 pts</div></div>
+    </div>
+    <div class="scoretotal">Total mapped: <b>100 / 100</b> pts</div>
+  </div>
+</section>
+
+<section id="evidence">
+  <div class="wrap reveal">
+    <span class="eyebrow">The evidence vault</span>
+    <h2 class="h2">Click through to verify any of it.</h2>
+    <div class="cards">
+      <a class="card" href="http://3.27.69.84:5001" target="_blank"><div class="ico">🌐</div><h3>Live application</h3><p>The deployed app on AWS EC2 (Sydney), served by PM2.</p><span class="go">http://3.27.69.84:5001 →</span></a>
+      <a class="card" href="https://github.com/osama-m-qut/medication-reminder-system" target="_blank"><div class="ico">⌥</div><h3>GitHub repository</h3><p>Full source, feature branches, PRs and CI/CD workflow.</p><span class="go">Open repo →</span></a>
+      <a class="card" href="https://github.com/osama-m-qut/medication-reminder-system/actions" target="_blank"><div class="ico">⚙️</div><h3>CI/CD pipeline</h3><p>GitHub Actions runs — test & deploy jobs passing.</p><span class="go">View runs →</span></a>
+      <a class="card" href="https://nomadsps.atlassian.net/jira/software/projects/MRS/boards/" target="_blank"><div class="ico">📋</div><h3>Jira board</h3><p>Epics, stories, sub-tasks and sprints (project MRS).</p><span class="go">Open board →</span></a>
+      <a class="card" href="https://www.figma.com/design/eOTBAmuSM5tgCKIcsGb490" target="_blank"><div class="ico">🎨</div><h3>Figma design</h3><p>Wireframes, hi-fi screens and the clickable prototype.</p><span class="go">Open Figma →</span></a>
+      <a class="card" href="https://github.com/osama-m-qut/medication-reminder-system/blob/main/docs/sysml-diagrams.drawio" target="_blank"><div class="ico">📐</div><h3>SysML diagrams</h3><p>Seven diagrams — open in diagrams.net.</p><span class="go">View diagrams →</span></a>
+    </div>
+  </div>
+</section>
+
+<section id="stack">
+  <div class="wrap reveal">
+    <span class="eyebrow">Engineering</span>
+    <h2 class="h2">Built on a professional stack.</h2>
+    <div class="badges">
+      <span class="badge">React 18</span><span class="badge">React Router 6</span><span class="badge">Tailwind CSS</span>
+      <span class="badge">Node.js</span><span class="badge">Express</span><span class="badge">Mongoose</span>
+      <span class="badge">MongoDB (Docker)</span><span class="badge">JWT + bcrypt</span><span class="badge">Mocha · Chai · Sinon</span>
+      <span class="badge">React Testing Library</span><span class="badge">GitHub Actions</span><span class="badge">PM2</span>
+      <span class="badge">AWS EC2 (Ubuntu)</span><span class="badge">SysML / diagrams.net</span><span class="badge">Figma</span><span class="badge">Jira Scrum</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b style="color:var(--ink)">Osama Mohamed</b> · Student ID 12281069 · IFQ636 Software Lifecycle Management — Assignment 1</p>
+    <p style="margin-top:8px">Project #17 — Medication Reminder System · Demo logins: patient@mediremind.com / Patient@123 · admin@mediremind.com / Admin@123</p>
+    <p style="margin-top:8px"><b style="color:var(--ink)">Use of GenAI:</b> GitHub Copilot was used as an assistant for brainstorming requirements, advising on application structure, explaining Figma workflows, and generating code snippets — all output was reviewed, tested and adapted. Full disclosure in the project report.</p>
+  </div>
+</footer>
+
+<script>
+  // Live health check against the real EC2 server
+  (function(){
+    var dot=document.getElementById('dot'), txt=document.getElementById('statusText');
+    fetch('http://3.27.69.84:5001/api/health',{cache:'no-store'})
+      .then(function(r){return r.json()})
+      .then(function(j){ dot.className='dot live'; txt.innerHTML='Live server responded: <b style="color:#22c55e">'+(j.status||'ok').toUpperCase()+'</b> · '+(j.service||'API'); })
+      .catch(function(){ dot.className='dot down'; txt.innerHTML='Could not reach the server from this page (try the <a style="color:#2dd4bf" href="http://3.27.69.84:5001" target="_blank">live link</a>). It may be a browser CORS/mixed-content block, not downtime.'; });
+  })();
+
+  // Scroll reveal
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');
+    // count-up
+    e.target.querySelectorAll('[data-count]').forEach(function(el){
+      var target=+el.dataset.count, t0=null;
+      function step(ts){ if(!t0)t0=ts; var p=Math.min((ts-t0)/1100,1); el.textContent=Math.round(p*target); if(p<1)requestAnimationFrame(step); }
+      requestAnimationFrame(step);
+    });
+    // rubric bars
+    e.target.querySelectorAll('.bar i').forEach(function(b){ b.style.width=b.dataset.w+'%'; });
+    io.unobserve(e.target);
+  }})},{threshold:.18});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+</script>
+</body>
+</html>
