@@ -28,11 +28,11 @@ sub.alignment = WD_ALIGN_PARAGRAPH.CENTER
 links = [
     ('Full name', 'Osama Mohamed'),
     ('Student ID', '12281069'),
-    ('Draw.io link', '<<INSERT diagrams.net share link>>'),
-    ('JIRA link', '<<INSERT Jira board URL>>'),
-    ('Figma link', '<<INSERT Figma prototype link>>'),
-    ('EC2 instance name and ID', '<<INSERT e.g. MediRemind-EC2 / i-0abc123...>>'),
-    ('GitHub link', '<<INSERT GitHub repository URL>>'),
+    ('Draw.io link', 'github.com/osama-m-qut/medication-reminder-system/blob/main/docs/sysml-diagrams.drawio (open at app.diagrams.net)'),
+    ('JIRA link', 'https://nomadsps.atlassian.net/jira/software/projects/MRS/boards/'),
+    ('Figma link', 'https://www.figma.com/design/eOTBAmuSM5tgCKIcsGb490'),
+    ('EC2 instance name and ID', 'MediRemind-EC2 / i-0a217255a436bf02d (Public IP 3.27.69.84)'),
+    ('GitHub link', 'https://github.com/osama-m-qut/medication-reminder-system'),
 ]
 t = doc.add_table(rows=len(links), cols=2)
 t.style = 'Light Grid Accent 1'
@@ -210,7 +210,7 @@ placeholder('Insert screenshot of the pm2 status output table on the EC2 instanc
 h2('5.5 GitHub "Run Test" page (job running, steps passing/failing)')
 placeholder('Insert screenshot of the Actions run page showing the test and deploy jobs with passing steps.')
 h2('5.6 First page of the application from the browser (highlight the public IP)')
-placeholder('Insert screenshot of http://<EC2_PUBLIC_IP>:5001 in the browser with the public IP highlighted.')
+placeholder('Insert screenshot of http://3.27.69.84:5001 in the browser with the public IP highlighted.')
 
 # ---------- 6. README ----------
 h1('6. README.md')

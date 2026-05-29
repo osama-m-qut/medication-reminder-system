@@ -12,11 +12,11 @@ Built for **QUT IFQ636 Software Lifecycle Management — Assignment 1**.
 
 | Resource | Link |
 |---|---|
-| **Live application (public URL)** | http://`<EC2_PUBLIC_IP>`:5001 |
+| **Live application (public URL)** | http://`3.27.69.84`:5001 |
 | **GitHub repository** | `https://github.com/osama-m-qut/medication-reminder-system` |
 | **JIRA board** | https://nomadsps.atlassian.net/jira/software/projects/MRS/boards/ |
 | **Figma prototype** | https://www.figma.com/design/eOTBAmuSM5tgCKIcsGb490 (open → Present for the interactive prototype) |
-| **Draw.io (SysML) diagrams** | `<DRAWIO_LINK>` |
+| **Draw.io (SysML) diagrams** | [docs/sysml-diagrams.drawio](docs/sysml-diagrams.drawio) (open at app.diagrams.net) |
 
 ## 🔑 Demo credentials
 
@@ -99,7 +99,7 @@ also serves the built React frontend, so the single public URL shows the UI.
 1. Install Node 20, MongoDB, PM2, and git on the instance.
 2. Clone the repo to `~/medication-reminder-system`.
 3. Create `backend/.env` with `NODE_ENV=production`, `MONGO_URI`, `JWT_SECRET`.
-4. Build the frontend: `cd frontend && REACT_APP_API_URL=http://<EC2_PUBLIC_IP>:5001 npm run build`
+4. Build the frontend: `cd frontend && REACT_APP_API_URL=http://3.27.69.84:5001 npm run build`
 5. Start: `pm2 start ecosystem.config.js && pm2 save`
 
 After this, **GitHub Actions** (`.github/workflows/ci-cd.yml`) automates redeploys: every
