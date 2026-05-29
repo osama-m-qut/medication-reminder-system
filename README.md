@@ -13,7 +13,7 @@ Built for **QUT IFQ636 Software Lifecycle Management — Assignment 1**.
 | Resource | Link |
 |---|---|
 | **Live application (public URL)** | http://`<EC2_PUBLIC_IP>`:5001 |
-| **GitHub repository** | `<GITHUB_REPO_URL>` |
+| **GitHub repository** | `https://github.com/osama-m-qut/medication-reminder-system` |
 | **JIRA board** | https://nomadsps.atlassian.net/jira/software/projects/MRS/boards/ |
 | **Figma prototype** | https://www.figma.com/design/eOTBAmuSM5tgCKIcsGb490 (open → Present for the interactive prototype) |
 | **Draw.io (SysML) diagrams** | `<DRAWIO_LINK>` |
@@ -61,7 +61,7 @@ Built for **QUT IFQ636 Software Lifecycle Management — Assignment 1**.
 
 ### 1. Clone and install
 ```bash
-git clone <GITHUB_REPO_URL>
+git clone https://github.com/osama-m-qut/medication-reminder-system
 cd medication-reminder-system
 npm run install-all        # installs root, backend and frontend deps
 ```
