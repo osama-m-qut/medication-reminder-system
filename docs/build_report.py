@@ -248,6 +248,10 @@ bullets([
  "Figma guidance: I asked Copilot how to perform tasks in Figma. Example prompt: 'How do I "
  "create a reusable component and an interactive prototype link in Figma for a dashboard "
  "screen?'",
+ "JIRA epics and stories: GitHub Copilot assisted me in drafting the required epics and user "
+ "stories for the JIRA board, which I then refined and broke down into sub-tasks. Example "
+ "prompt: 'Draft the epics and user stories (in As a... I want... so that... form) for a "
+ "medication reminder app covering medications, reminders, dose tracking and an admin console.'",
  "Automated test suites: GitHub Copilot generated the project's automated test suites for me "
  "- the Mocha + Chai + Sinon backend API tests (13 tests, which stub the Mongoose models so "
  "they run without a database) and the React Testing Library frontend test. Example prompt: "
@@ -267,9 +271,10 @@ bullets([
 para(
  "Which parts were influenced: the AI assisted with the initial data-model and folder "
  "structure, boilerplate for controllers and components (generated and auto-completed inside "
- "VS Code), the automated test suites, and the CI/CD pipeline workflow. The SysML design, the "
- "requirement decomposition, the JIRA plan and the Figma design decisions were my own work, "
- "informed by the AI's suggestions.")
+ "VS Code), the automated test suites, the CI/CD pipeline workflow, and the drafting of the "
+ "JIRA epics and user stories. The SysML design, the requirement decomposition and the Figma "
+ "design decisions were my own work, informed by the AI's suggestions; the JIRA backlog and "
+ "sprint planning were finalised and managed by me.")
 para(
  "Verification and adaptation: all AI-suggested code, including the generated test suites, was "
  "reviewed, edited to fit the project's conventions, and verified by running the application "
