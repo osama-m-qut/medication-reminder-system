@@ -254,15 +254,22 @@ bullets([
  "'Write Mocha and Sinon unit tests for this Express medication controller, stubbing the "
  "Mongoose model so no database is needed, and cover the validation and ownership checks.' I "
  "then ran the suites and verified that all tests pass.",
- "Code snippets and examples: I used Copilot to generate example snippets such as a Mongoose "
- "schema, an owner-scoped Express controller and a React form component.",
+ "CI/CD pipeline: GitHub Copilot helped me build the CI/CD pipeline - drafting the GitHub "
+ "Actions workflow that runs the tests, builds the frontend and deploys to EC2 over SSH, and "
+ "explaining how to configure the production environment and encrypted secrets. Example "
+ "prompt: 'Write a GitHub Actions workflow that runs Mocha tests, then on push to main builds "
+ "the React app and deploys it to an EC2 instance via SSH and restarts pm2.'",
+ "Code snippets and examples (in VS Code): I used GitHub Copilot inside VS Code to generate "
+ "and auto-complete code as I typed - it suggested and completed snippets such as a Mongoose "
+ "schema, an owner-scoped Express controller and a React form component, which I accepted, "
+ "edited and integrated.",
 ])
 para(
  "Which parts were influenced: the AI assisted with the initial data-model and folder "
- "structure, boilerplate for controllers and components, and it generated the automated test "
- "suites. The SysML design, the requirement decomposition, the JIRA plan, the Figma design "
- "decisions and the CI/CD and deployment configuration were my own work, informed by the AI's "
- "suggestions.")
+ "structure, boilerplate for controllers and components (generated and auto-completed inside "
+ "VS Code), the automated test suites, and the CI/CD pipeline workflow. The SysML design, the "
+ "requirement decomposition, the JIRA plan and the Figma design decisions were my own work, "
+ "informed by the AI's suggestions.")
 para(
  "Verification and adaptation: all AI-suggested code, including the generated test suites, was "
  "reviewed, edited to fit the project's conventions, and verified by running the application "
