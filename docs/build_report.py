@@ -13,6 +13,9 @@ styles['Normal'].font.size = Pt(11)
 def h1(t): doc.add_heading(t, level=1)
 def h2(t): doc.add_heading(t, level=2)
 def para(t): doc.add_paragraph(t)
+def bullets(items):
+    for it in items:
+        doc.add_paragraph(it, style='List Bullet')
 def placeholder(t):
     p = doc.add_paragraph()
     r = p.add_run('[SCREENSHOT] ' + t)
@@ -20,7 +23,7 @@ def placeholder(t):
     r.font.color.rgb = RGBColor(0xC0, 0x00, 0x00)
 
 # ---------- Title + header links ----------
-title = doc.add_heading('IFQ636 Assignment 1 — Software Requirements Analysis and Design', level=0)
+doc.add_heading('IFQ636 Assignment 1 - Software Requirements Analysis and Design', level=0)
 sub = doc.add_paragraph('Medication Reminder System (MediRemind)')
 sub.runs[0].bold = True
 sub.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -55,7 +58,7 @@ para(
 para(
  "The system was built by extending the provided Node.js, React.js and MongoDB starter "
  "project, which supplied user authentication only. On top of that foundation I implemented "
- "four meaningful CRUD modules — Medications, Reminders, Dose Logs and an Admin console — "
+ "four meaningful CRUD modules - Medications, Reminders, Dose Logs and an Admin console - "
  "together with role-based access control that separates the patient (user) panel from the "
  "administrator panel. The application was designed using SysML, planned and tracked in JIRA, "
  "prototyped in Figma, version-controlled on GitHub with a feature-branch workflow, and "
@@ -68,7 +71,7 @@ para(
  "primary users are patients managing one or more ongoing medications, and a system "
  "administrator responsible for oversight.")
 para("User requirements (functional):")
-for r in [
+bullets([
  "As a patient, I want to register and log in securely so that my health information is private.",
  "As a patient, I want to add, view, edit and delete my medications (name, dosage, form, "
  "instructions, prescriber, quantity) so that my regimen is accurately recorded.",
@@ -79,8 +82,7 @@ for r in [
  "my own behaviour.",
  "As an administrator, I want to view all users and system-wide statistics, and manage user "
  "roles or remove accounts, so that the platform stays well governed.",
-]:
-    doc.add_paragraph(r, style='List Bullet')
+])
 para("Non-functional requirements: the system must isolate each patient's data (a patient may "
  "only access their own records), authenticate every request with JWTs, be responsive on "
  "desktop and mobile, and be continuously deployable through an automated pipeline.")
@@ -98,9 +100,9 @@ para(
  "'Medication Reminder System') is decomposed by containment into five sub-requirements: "
  "Medication Management (R1), Reminder Scheduling (R2), Dose Tracking & Adherence (R3), User "
  "Authentication (R4) and Admin Management (R5). Detailed requirements are linked using the "
- "«deriveReqt» relationship — for example R1 derives R1.1 (Add/Edit/Delete Medication) and "
+ "deriveReqt relationship - for example R1 derives R1.1 (Add/Edit/Delete Medication) and "
  "R1.2 (View Medications), and R3 derives R3.1 (Compute Adherence). Each design block is then "
- "tied back to the requirement it fulfils with the «satisfy» relationship: MedicationService "
+ "tied back to the requirement it fulfils with the satisfy relationship: MedicationService "
  "satisfies R1, ReminderService satisfies R2, DoseLogService satisfies R3, AuthService "
  "satisfies R4 and AdminService satisfies R5. This traceability shows that every requirement "
  "is realised by a concrete part of the implementation.")
@@ -109,12 +111,11 @@ para(
  "(register/login, manage medications, schedule reminders, log doses, view adherence and "
  "history; manage users and view statistics). The BDD defines the data blocks (User, "
  "Medication, Reminder, DoseLog) with their attributes and the associations and multiplicities "
- "between them (a User owns 0..* Medications; a Medication has 0..* Reminders; a Reminder "
- "generates 0..* DoseLogs). The IBD shows the runtime structure — a React client, an Express "
- "REST API and a MongoDB database communicating over HTTPS/JSON and Mongoose. The activity "
- "diagram models the 'log a dose' workflow, the sequence diagram models the 'create reminder' "
- "interaction across client, API, controller and database, and the state machine models the "
- "DoseLog lifecycle (Scheduled → Taken / Skipped / Missed).")
+ "between them. The IBD shows the runtime structure - a React client, an Express REST API and "
+ "a MongoDB database. The activity diagram models the 'log a dose' workflow, the sequence "
+ "diagram models the 'create reminder' interaction across client, API, controller and "
+ "database, and the state machine models the DoseLog lifecycle (Scheduled -> Taken / Skipped "
+ "/ Missed).")
 placeholder('Insert each SysML diagram here (requirement, use case, BDD, IBD, activity, sequence, state machine), each with a one-line caption.')
 
 h2('3.2 Software project management with JIRA')
@@ -164,11 +165,8 @@ para(
  "'protect' middleware authenticates requests and an 'admin' middleware enforces role-based "
  "access for the admin routes. Every medication, reminder and dose-log endpoint is "
  "owner-scoped: queries are filtered by the authenticated user's id and ownership is checked "
- "before any update or delete, so one patient can never read or modify another's data. The API "
- "exposes full CRUD for medications and reminders, create/read/update/delete plus an adherence "
- "aggregation for dose logs, and admin endpoints for user management and system statistics. "
- "Adherence is computed on demand from the dose events using a MongoDB aggregation, keeping a "
- "single source of truth.")
+ "before any update or delete, so one patient can never read or modify another's data. "
+ "Adherence is computed on demand from the dose events using a MongoDB aggregation.")
 para(
  "Frontend. The frontend is a React single-page application using React Router and Tailwind "
  "CSS. Pages include Dashboard, Medications, Reminders, History, Admin and Profile, with "
@@ -178,27 +176,27 @@ para(
  "EC2. A role-gated navigation bar shows the Admin link only to administrators.")
 para(
  "Testing. The backend has a Mocha + Chai + Sinon test suite (13 tests) that stubs the "
- "Mongoose models, so the controller logic — status codes, validation and ownership checks — "
+ "Mongoose models, so the controller logic - status codes, validation and ownership checks - "
  "is verified without needing a database, which is ideal for the CI runner. The frontend has a "
- "React Testing Library test that renders the app and verifies the navigation.")
+ "React Testing Library test that renders the app and verifies the navigation. These automated "
+ "test suites were generated with the assistance of GitHub Copilot and then reviewed and run "
+ "to confirm they all pass (see Section 8).")
 para(
  "GitHub version control and branching. All code, design artefacts and documentation are kept "
  "under Git. The repository uses a feature-branch workflow: 'main' is the always-deployable "
- "branch, and each feature was developed on its own branch (feature/medication-crud, "
- "feature/reminder-scheduling, feature/dose-tracking, feature/admin-panel, feature/ci-cd) and "
- "merged into main through a pull request. This produces a clear commit history and reviewable "
- "pull requests.")
+ "branch, and each feature was developed on its own branch and merged into main through a pull "
+ "request. This produces a clear commit history and reviewable pull requests.")
 placeholder('Insert screenshots: GitHub repo (backend/ + frontend/), branch list, an example pull request, and commit history.')
 
 # ---------- 5. CI/CD ----------
 h1('5. CI/CD Pipeline setup')
 para(
  "Continuous integration and deployment are automated with GitHub Actions. On every push or "
- "pull request to main the pipeline installs dependencies and runs the backend and frontend "
- "test suites. When tests pass on a push to main, the deploy job connects to the EC2 instance "
- "over SSH, pulls the latest code, installs dependencies, rebuilds the frontend and reloads "
- "the application under PM2. Deployment credentials are stored as encrypted GitHub Actions "
- "secrets within a 'production' environment.")
+ "pull request to main the pipeline installs dependencies and runs the automated test suites. "
+ "When tests pass on a push to main, the deploy job builds the frontend on the runner, ships "
+ "it to the EC2 instance over SSH, updates the backend and reloads the application under PM2. "
+ "Deployment credentials are stored as encrypted GitHub Actions secrets within a 'production' "
+ "environment.")
 h2('5.1 Workflow file (YML) screenshot')
 placeholder('Insert screenshot of .github/workflows/ci-cd.yml.')
 h2('5.2 Test case results with pass/fail status (terminal output)')
@@ -228,8 +226,8 @@ para(
  "requirements analysis and SysML design, through JIRA-based planning, Figma UI/UX design, "
  "and a tested MERN implementation, to an automated CI/CD pipeline deploying to AWS EC2. The "
  "delivered system meets the assignment's CRUD, user-panel and admin-panel requirements with "
- "meaningful, domain-appropriate features, and the engineering practices — owner-scoped data "
- "access, automated tests, feature branches and continuous deployment — reflect professional "
+ "meaningful, domain-appropriate features, and the engineering practices - owner-scoped data "
+ "access, automated tests, feature branches and continuous deployment - reflect professional "
  "standards. The result is a maintainable foundation that could be extended with push "
  "notifications, caregiver sharing or refill alerts.")
 
@@ -239,7 +237,7 @@ para(
  "Generative AI was used as a development assistant during this project. The tool used was "
  "GitHub Copilot.")
 para("How it was used:")
-for r in [
+bullets([
  "Brainstorming: I used Copilot to brainstorm candidate features and requirements for a "
  "medication reminder system. Example prompt: 'List the core CRUD entities and user/admin "
  "features a medication reminder web app should have.'",
@@ -250,22 +248,27 @@ for r in [
  "Figma guidance: I asked Copilot how to perform tasks in Figma. Example prompt: 'How do I "
  "create a reusable component and an interactive prototype link in Figma for a dashboard "
  "screen?'",
+ "Automated test suites: GitHub Copilot generated the project's automated test suites for me "
+ "- the Mocha + Chai + Sinon backend API tests (13 tests, which stub the Mongoose models so "
+ "they run without a database) and the React Testing Library frontend test. Example prompt: "
+ "'Write Mocha and Sinon unit tests for this Express medication controller, stubbing the "
+ "Mongoose model so no database is needed, and cover the validation and ownership checks.' I "
+ "then ran the suites and verified that all tests pass.",
  "Code snippets and examples: I used Copilot to generate example snippets such as a Mongoose "
- "schema, an owner-scoped Express controller, a React form component and a Mocha test that "
- "stubs Mongoose with Sinon.",
-]:
-    doc.add_paragraph(r, style='List Bullet')
+ "schema, an owner-scoped Express controller and a React form component.",
+])
 para(
  "Which parts were influenced: the AI assisted with the initial data-model and folder "
- "structure, boilerplate for controllers/components, and example test patterns. The SysML "
- "design, the requirement decomposition, the JIRA plan, the Figma design decisions and the "
- "CI/CD and deployment configuration were my own work, informed by the AI's suggestions.")
+ "structure, boilerplate for controllers and components, and it generated the automated test "
+ "suites. The SysML design, the requirement decomposition, the JIRA plan, the Figma design "
+ "decisions and the CI/CD and deployment configuration were my own work, informed by the AI's "
+ "suggestions.")
 para(
- "Verification and adaptation: all AI-suggested code was reviewed, edited to fit the project's "
- "conventions, and verified by running the application and the automated test suite (13 "
- "backend tests and the frontend test all pass) and by manually exercising each CRUD flow. "
- "Suggestions that were inaccurate or did not enforce per-user data isolation were corrected. "
- "AI output was treated as a starting point, not a final answer.")
+ "Verification and adaptation: all AI-suggested code, including the generated test suites, was "
+ "reviewed, edited to fit the project's conventions, and verified by running the application "
+ "and the automated tests (13 backend tests and the frontend test all pass) and by manually "
+ "exercising each CRUD flow. Suggestions that were inaccurate or did not enforce per-user data "
+ "isolation were corrected. AI output was treated as a starting point, not a final answer.")
 
 # ---------- 9. Reflection ----------
 h1('9. Reflection')
@@ -301,7 +304,5 @@ for r in refs:
     p.paragraph_format.first_line_indent = Pt(-36)
 
 doc.save('IFQ636_A1_Report_OsamaMohamed.docx')
-
-# word count of body prose (rough)
 wc = sum(len(p.text.split()) for p in doc.paragraphs)
 print(f"Report saved. Approx body word count: {wc}")

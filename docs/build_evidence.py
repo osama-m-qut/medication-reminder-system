@@ -212,7 +212,7 @@ $ curl http://3.27.69.84:5001/api/health
 <footer><div class="wrap">
 <p><b style="color:var(--ink)">Osama Mohamed</b> · Student ID 12281069 · IFQ636 Software Lifecycle Management — Assignment 1 · Project #17 Medication Reminder System</p>
 <p style="margin-top:8px">Demo logins: patient@mediremind.com / Patient@123 · admin@mediremind.com / Admin@123</p>
-<p style="margin-top:8px"><b style="color:var(--ink)">Use of GenAI:</b> GitHub Copilot assisted with brainstorming, application-structure advice, Figma guidance and code snippets; all output was reviewed, tested and adapted.</p>
+<p style="margin-top:8px"><b style="color:var(--ink)">Use of GenAI:</b> GitHub Copilot assisted with brainstorming, application-structure advice, Figma guidance, code snippets, and generating the automated test suites (Mocha + Sinon backend tests and the React Testing Library frontend test); all output was reviewed, run and adapted.</p>
 </div></footer>
 
 <div id="lb" onclick="this.style.display='none'"><img id="lbimg" src="" alt=""/></div>
