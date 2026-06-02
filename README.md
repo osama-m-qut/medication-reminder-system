@@ -8,7 +8,7 @@ Built for **QUT IFQ636 Software Lifecycle Management — Assignment 1**.
 
 ---
 
-## 🔗 Project links
+##  Project links
 
 | Resource | Link |
 |---|---|
@@ -16,9 +16,9 @@ Built for **QUT IFQ636 Software Lifecycle Management — Assignment 1**.
 | **GitHub repository** | `https://github.com/osama-m-qut/medication-reminder-system` |
 | **JIRA board** | https://nomadsps.atlassian.net/jira/software/projects/MRS/boards/ |
 | **Figma prototype** | https://www.figma.com/design/eOTBAmuSM5tgCKIcsGb490 (open → Present for the interactive prototype) |
-| **Draw.io (SysML) diagrams** | [docs/sysml-diagrams.drawio](docs/sysml-diagrams.drawio) (open at app.diagrams.net) |
+| **Draw.io (SysML) diagrams** | [sysml-diagrams.drawio](docs/sysml-diagrams.drawio) (open at app.diagrams.net) |
 
-## 🔑 Demo credentials
+##  Demo credentials
 
 | Role | Email | Password |
 |---|---|---|
@@ -29,7 +29,7 @@ Built for **QUT IFQ636 Software Lifecycle Management — Assignment 1**.
 
 ---
 
-## 🧱 Tech stack
+##  Tech stack
 
 - **Frontend:** React 18 (Create React App), React Router 6, Tailwind CSS, Axios
 - **Backend:** Node.js, Express, Mongoose
@@ -38,7 +38,7 @@ Built for **QUT IFQ636 Software Lifecycle Management — Assignment 1**.
 - **Tests:** Mocha + Chai + Sinon (backend), React Testing Library + Jest (frontend)
 - **CI/CD:** GitHub Actions → SSH deploy to AWS EC2, served via PM2
 
-## 📦 Features
+##  Features
 
 **Patient (user panel)**
 - Register / log in (JWT auth)
@@ -53,7 +53,7 @@ Built for **QUT IFQ636 Software Lifecycle Management — Assignment 1**.
 
 ---
 
-## 🚀 Local setup
+##  Local setup
 
 ### Prerequisites
 - Node.js 20+
@@ -114,14 +114,14 @@ push to `main` runs the tests and, on success, SSHes into EC2, pulls, rebuilds a
 
 ---
 
-## 🌿 Branching strategy
+##  Branching strategy
 
 - `main` — protected, always deployable; deploys on merge.
 - `feature/*` — one branch per feature (e.g. `feature/medication-crud`,
   `feature/reminder-scheduling`, `feature/dose-tracking`, `feature/admin-panel`,
   `feature/ci-cd`), merged into `main` via pull requests.
 
-## 📁 Structure
+##  Structure
 ```
 medication-reminder-system/
 ├── backend/            # Express API
@@ -139,7 +139,7 @@ medication-reminder-system/
 └── ecosystem.config.js # PM2
 ```
 
-## 🤖 Use of GenAI
+##  Use of GenAI
 GitHub Copilot was used as an assistant during development — for brainstorming requirements,
 advice on application structure, guidance on Figma, and generating code snippets/examples.
 All AI-assisted output was reviewed, tested, and adapted. See the project report for the full
